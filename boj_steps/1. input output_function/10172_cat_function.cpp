@@ -15,15 +15,18 @@ string body(string str){
 string leg(string str){
 	return str;
 }
+void summon_cat(){
+	cout << ear("\\    /\\") << "\n";
+	cout << face(" )  ( \')") << "\n";
+	cout << body("(  /  )") << "\n";
+	cout << leg(" \\(__)|") <<endl;
+}
 
 int main(){
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 
-	cout << ear("\\    /\\") << "\n";
-	cout << face(" )  ( \')") << "\n";
-	cout << body("(  /  )") << "\n";
-	cout << leg(" \\(__)|") <<endl;
+	summon_cat();
 
 	return 0;
 }

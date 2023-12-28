@@ -3,15 +3,15 @@
 
 using namespace std;
 
-string textout(string text){
-	return text;
+void print_text(){
+	cout << "Hello World" << endl;
 }
 
 int main(){
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 
-	cout << textout("Hello World") << endl;
+	print_text();
 
 	return 0;
 }

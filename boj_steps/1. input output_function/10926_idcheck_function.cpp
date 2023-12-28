@@ -3,8 +3,11 @@
 
 using namespace std;
 
-string textout(string text){
-	return text+"\?\?!";
+string shock_by(string text){
+
+	string shocking_sign = "\?\?!";
+
+	return text+shocking_sign;
 }
 
 int main(){
@@ -14,7 +17,7 @@ int main(){
 	string id;
 
 	cin >> id;
-	cout << textout(id) << endl;
+	cout << shock_by(id) << endl;
 
 	return 0;
 }

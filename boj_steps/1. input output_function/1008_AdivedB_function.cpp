@@ -3,7 +3,16 @@
 using namespace std;
 
 double divide(double a, double b){
-	return a/b;
+	double res;
+
+	if(b==0){
+		cout << "Error" << endl;
+	}
+	else{
+		res = a/b;
+
+	}
+	return res;
 }
 
 int main(){

@@ -2,37 +2,41 @@
 
 using namespace std;
 
-void to_finaltime(const int h, const int m, const int t){
-	int hour, min;
-
-	min = m+t;
-
-	int i;
-
-	for(i=0; min >= 60; ++i){
-		min -= 60;
-	}
-
-	hour = h+i;
-
-	if(hour>=24){
-		hour -= 24;
-		cout << hour << " " << min << "\n";
-	}
-	else
-		cout << hour << " " << min << endl;
+int to_minute(const int hour, const int min) {
+	return (hour * 60) + min;
 }
 
-int main(){
+pair<int, int> to_date_time(int minute) {
+	int hour = minute / 60;
+	int min = minute % 60;
+
+	return{ hour, min };
+}
+
+int add_time(int start_time, int duration) {
+	int after_time = start_time + duration;
+
+	if (after_time >= 1440)
+		after_time %= 1440;
+
+	return after_time;
+}
+
+int main() {
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 
-	int hour, minute, time;
+	int h, m;
+	cin >> h >> m;
 
-	cin >> hour >> minute;
-	cin >> time;
+	int cooking_time;
+	cin >> cooking_time;
 
-	to_finaltime(hour,minute,time);
+	int now = to_minute(h, m);
+	int end_time = add_time(now, cooking_time);
+
+	auto[end_h, end_m] = to_date_time(end_time);
+	cout << end_h << " " << end_m << "\n";
 
 	return 0;
 }

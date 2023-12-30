@@ -5,16 +5,14 @@ using namespace std;
 
 string compare_num(int a, int b){
 
-	string str;
-
-	if(a > b){
-		str = ">";
+	if (a > b) {
+		return ">";
 	}
-	else if(a<b){
-		str = "<";
+	else if (a<b) {
+		return "<";
 	}
-	else{
-		str = "==";
+	else {
+		return "==";
 	}
 
 	return str;

@@ -2,41 +2,37 @@
 
 using namespace std;
 
-int hour_change(int h, int m){
-	int r_hour;
-
-	if(m-45>=0)
-		r_hour = h;
-	
-	else if(m-45<0){
-		if(h-1>=0)
-			r_hour = h-1;
-		else
-			r_hour = 23;
-	}
-
-	return r_hour;
+int to_minute(const int hour, const int min) {
+	return (hour * 60) + min;
 }
 
-int minute_change(int h, int m){
-	int r_minute;
+pair<int, int> to_date_time(int minute) {
+	int hour = minute / 60;
+	int min = minute % 60;
 
-	if(m-45>=0)
-		r_minute = m -45;
-	else if(m-45<0)
-		r_minute = 60+(m-45);
-
-	return r_minute;
+	return{ hour, min };
 }
 
-int main(){
+int make_early(const int min, const int amount) {
+	int early_min = min - amount;
+	if (early_min < 0)
+		early_min += 1440;
+
+	return early_min;
+}
+
+int main() {
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 
 	int h, m;
 	cin >> h >> m;
 
-	cout << hour_change(h, m) << " " << minute_change(h, m) << endl; 
+	int min = to_minute(h, m);
+	int early_min = make_early(min, 45);
+
+	auto[early_h, early_m] = to_date_time(early_min);
+	cout << early_h << " " << early_m << "\n";
 
 	return 0;
 }

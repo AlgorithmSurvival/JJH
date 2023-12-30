@@ -1,39 +1,31 @@
 #include <iostream>
+#include <algorithm>
 
 using namespace std;
 
-int calculate_reward(int num1, int num2, int num3){
-	int reward;
-
-	if((num1==num2)&&(num2==num3)){
-		reward = 10000 + num1 * 1000;
-	}
-	else if((num1==num2)||(num2==num3)||(num1==num3)){
-		if(num1==num2){
-			reward = 1000 + num1 * 100;
-		}
-		else if(num2 == num3){
-			reward = 1000 + num2 * 100;
-		}
-		else{
-			reward = 1000 + num3 * 100;
-		}
-	}
-	else{
-		if((num1 > num2)&&(num1 > num3)){
-			reward = num1 * 100;
-		}
-		else if((num2 > num1)&&(num2 > num3)){
-			reward = num2 * 100;
-		}
-		else
-			reward = num3 * 100;
-	}
-
-	return reward;
+template <class T>
+inline T max(const T a, const T b, const T c) {
+	return max(max(a, b), c);
 }
 
-int main(){
+inline int get_prize(const int a, const int b, const int c) {
+	// #Case 1
+	if (a == b && b == c)
+		return 10000 + a * 1000;
+
+	// #Case 2
+	else if (a == b)
+		return 1000 + a * 100;
+	else if (b == c)
+		return 1000 + b * 100;
+	else if (c == a)
+		return 1000 + c * 100;
+
+	// #Case 3
+	return max(a, b, c) * 100;
+}
+
+int main() {
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 
@@ -41,7 +33,7 @@ int main(){
 
 	cin >> num1 >> num2 >> num3;
 
-	cout << calculate_reward(num1, num2, num3) << endl;
+	cout << get_prize(num1, num2, num3) << "\n";
 
 	return 0;
 }

@@ -3,36 +3,33 @@
 
 using namespace std;
 
-string mark(int a){
-	string grade;
+string get_grade(int score) {
 
-	if(a <= 100 && a >= 90){
-		grade = "A";
+	if (score <= 100 && score >= 90) {
+		return "A";
 	}
-	else if(a<=89 && a>=80){
-		grade = "B";
+	else if (score >= 80) {
+		return "B";
 	}
-	else if(a<=79 && a>=70){
-		grade = "C";
+	else if (score >= 70) {
+		return "C";
 	}
-	else if(a<=69 && a>=60){
-		grade = "D";
+	else if (score >= 60) {
+		return "D";
 	}
-	else{
-		grade = "F";
+	else {
+		return "F";
 	}
-
-	return grade;
 }
 
-int main(){
+int main() {
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 
-	int res;
-	cin >> res;
+	int score;
+	cin >> score;
 
-	cout << mark(res) << endl;
+	cout << get_grade(score) << endl;
 
 	return 0;
 }

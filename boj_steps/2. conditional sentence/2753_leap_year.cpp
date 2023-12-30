@@ -2,17 +2,11 @@
 
 using namespace std;
 
-int categorize(int year){
-	int res;
-
-	if(((year%4==0)&&(year%100!=0))||(year%400==0))
-		res = 1;
-	else
-		res = 0;
-	return res;
+bool is_leap_year(int year) {
+	return(((year % 4 == 0) && (year % 100 != 0)) || (year % 400 == 0));
 }
 
-int main(){
+int main() {
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 
@@ -20,7 +14,7 @@ int main(){
 
 	cin >> year;
 
-	cout << categorize(year) << endl;
+	cout << ((is_leap_year(year)) ? 1 : 0) << endl;
 
 	return 0;
 }

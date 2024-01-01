@@ -11,6 +11,7 @@ void print_line(int empty_cnt1, int star_cnt){
 	for(int cnt = 0; cnt < star_cnt; ++cnt){
 		cout << '*';
 	}
+	cout << "\n";
 }
 
 void print_star(int width){
@@ -19,7 +20,6 @@ void print_star(int width){
 		int empty_cnt = (width - i);
 
 		print_line(empty_cnt, star_cnt);
-		cout <<"\n";
 	}
 }
 

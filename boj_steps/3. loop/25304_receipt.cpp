@@ -1,37 +1,33 @@
 #include <iostream>
 
 using namespace std;
+using ll = long long;
 
-void comfirm_receipt(long long int price, int count){
+bool comfirm_receipt(const ll price, const int count) {
 
 	int goods, num;
 
-	long long int check_price = 0;
+	ll check_price = 0;
 
-	for(int i = 1; i <= count; ++i){
+	for (int i = 1; i <= count; ++i) {
 		cin >> goods >> num;
 		check_price += goods * num;
 	}
 
-	if(check_price == price)
-		cout << "Yes" << endl;
-	else
-		cout << "No" << endl;
+	return (check_price == price);
 }
 
-int main(){
+int main() {
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 
-	long long int price;
-
-	cin >> price; 
+	ll price;
+	cin >> price;
 
 	int count;
-
 	cin >> count;
 
-	comfirm_receipt(price, count);
+	cout << ((comfirm_receipt(price, count)) ? "Yes" : "No") << "\n";
 
 	return 0;
 }

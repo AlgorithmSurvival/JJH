@@ -2,28 +2,24 @@
 
 using namespace std;
 
-void sum_loop(int count){
-
-	int num1, num2;
-
-	for(int i = 1; i <= count; ++i){
-		cin >> num1 >> num2;
-
-		cout << "Case #" << i << ": " << num1 << " + " 
-		<< num2 << " = " << num1+num2 << "\n";
-	}
-
+inline int sum(int num1, int num2) {
+	return num1 + num2;
 }
 
-int main(){
+int main() {
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 
-	int count;
+	int T;
+	cin >> T;
 
-	cin >> count;
+	for (int test_case = 1; test_case <= T; ++test_case) {
+		int num1, num2;
+		cin >> num1 >> num2;
 
-	sum_loop(count);
+		cout << "Case #" << test_case << ": " << num1 << " + "
+			<< num2 << " = " << sum(num1, num2) << "\n";
+	}
 
 	return 0;
 }

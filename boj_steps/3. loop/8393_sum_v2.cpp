@@ -3,7 +3,6 @@
 using namespace std;
 
 int sum(int n){
-
 	int res = 0;
 
 	for(int i = 1; i <= n; ++i){
@@ -11,7 +10,6 @@ int sum(int n){
 	}
 
 	return res;
-
 }
 
 int main(){

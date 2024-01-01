@@ -2,28 +2,25 @@
 
 using namespace std;
 
-bool stop_loop(int num1, int num2){
+bool stop_loop(int num1, int num2) {
 
-	if((num1 == 0) && (num2 == 0))
-		return 0;
+	if ((num1 == 0) && (num2 == 0))
+		return false;
 	else
-		return 1;
+		return true;
 }
 
-void sum_loop(){
+void sum_loop() {
 	int num1, num2 = 1;
+	cin >> num1 >> num2;
 
-	while(stop_loop(num1, num2)==1){
-		cin >> num1 >> num2;
-
-		if(num1 == 0 && num2 == 0)
-			break;
-
+	while (stop_loop(num1, num2)) {
 		cout << num1 + num2 << "\n";
+		cin >> num1 >> num2;
 	}
 }
 
-int main(){
+int main() {
 	cin.tie(nullptr);
 	ios_base::sync_with_stdio(false);
 

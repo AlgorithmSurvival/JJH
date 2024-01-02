@@ -3,14 +3,9 @@
 #include <vector>
 
 using namespace std;
-typedef long long ll;
+using ll = long long;
 
-pair<ll, ll> compare_size(const ll cnt) {
-	vector<ll> arr(cnt, 0);
-
-	for (int i = 0; i < cnt; ++i) {
-		cin >> arr[i];
-	}
+pair<ll, ll> compare_size(const ll cnt, vector<ll>& arr) {
 
 	ll max_num = arr[0]; 
 	ll min_num = arr[0];
@@ -30,7 +25,12 @@ int main() {
 	ll cnt;
 	cin >> cnt;
 
-	auto [ min_num, max_num ] = compare_size(cnt);
+	vector<ll> arr(cnt);
+	for (int i = 0; i < cnt; ++i) {
+		cin >> arr[i];
+	}
+
+	auto [ min_num, max_num ] = compare_size(cnt, arr);
 	cout << min_num << " " << max_num << "\n";
 
 	return 0;

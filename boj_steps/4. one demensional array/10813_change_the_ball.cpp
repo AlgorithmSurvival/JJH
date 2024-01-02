@@ -3,7 +3,7 @@
 
 using namespace std;
 
-void print_ball_number(int N, int M) {
+vector<int> change_ball_number(int N, int M) {
 	vector<int> basket(N);
 
 	for (int idx = 0; idx < N; ++idx) {
@@ -22,9 +22,7 @@ void print_ball_number(int N, int M) {
 		basket[j] = ex_basket; 
 	}
 
-	for (int idx = 0; idx < N; ++idx) {
-		cout << basket[idx]+1 << " ";
-	}
+	return basket;
 }
 
 int main() {
@@ -34,7 +32,11 @@ int main() {
 	int N, M;
 	cin >> N >> M;
 
-	print_ball_number(N, M);
+	vector<int> basket = change_ball_number(N, M);
+
+	for (int idx = 0; idx < N; ++idx) {
+		cout << basket[idx]+1 << " ";
+	}
 
 	return 0;
 }

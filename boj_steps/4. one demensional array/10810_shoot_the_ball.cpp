@@ -25,7 +25,7 @@ int main() {
 	int N, M;
 	cin >> N >> M;
 
-	vector<int> basket(N) = count_ball_num(N, M);
+	vector<int> basket = count_ball_num(N, M);
 
 	for (int cnt = 0; cnt < N; ++cnt)
 		cout << basket[cnt] << " ";

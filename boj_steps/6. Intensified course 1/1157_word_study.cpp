@@ -35,37 +35,48 @@ char check_word(const string word) {
 	}
 	*/
 
-	int max_num = 0;
+	int max_num = alpha_cnt[0];
 	int max_idx = 0;
 
 	for (int i = 0; i < alpha_cnt.size(); ++i) {
-		max_num = max(max_num, alpha_cnt[i]);
-
-		if (alpha_cnt[i] >= max_num)
+		if (alpha_cnt[i] >= max_num) {
+			max_num = alpha_cnt[i];
 			max_idx = i;
+		}		
 	}
 
-	//cout << max_num << " " << max_idx << "\n";
+	cout << max_num << " " << max_idx << "\n";
 
 	int cnt = 0;
 
+	/*
 	for (int i = 0; i < alpha_cnt.size(); ++i) {
 		if (max_num == alpha_cnt[i])
 			++cnt;
 		if (cnt > 1)
 			break;
 	}
+	*/
+
+	auto max = find(alpha_cnt.begin(), alpha_cnt.end(), max_num);
+	auto other = find(max + 1, alpha_cnt.end(), max_num);
+
+	if (other != alpha_cnt.end())
+		return '?';
+
+	return (max_idx + 'A');
 
 	//cout << cnt << "\n";
 
 	//cout << max_idx + 'A';
-
+	/*
 	if (cnt > 1)
 		return '?';
 	else
 		return (max_idx + 'A');
 
 	return 0;
+	*/
 }
 
 int main() {

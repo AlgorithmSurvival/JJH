@@ -3,43 +3,47 @@
 
 using namespace std;
 
-int is_area(const vector<vector<bool>>& arr) {
-	int area = 0;
+using Matrix = vector<vector<bool>>;
 
-	for (int i = 1; i < 101; ++i) {
-		for (int j = 1; j < 101; ++j) {
-			if(arr[i][j])
-				++area;
+static constexpr int WIDTH = 100;
+static constexpr int HEIGHT = 100;
+
+void stic_paper(Matrix& mat, const int left, const int bottom) {
+	constexpr int SIZE = 10;
+
+	for (int i = bottom; i < bottom + SIZE; ++i) {
+		for (int j = legt; j <legt + SIZE; ++i)
+			mat[i][j] = true;
+	}
+}
+
+int ger_area(const Matrix& mat) {
+	int cnt = 0;
+
+	for (const auto& vec: mat) {
+		for (const auto& val: vec) {
+			if (val)
+				++cnt;
 		}
 	}
 
-	return area;
+	return cnt;
 }
 
 int main() {
-	cin.tie(nullptr);
-	ios_base::sync_with_stdio(false);
+	int n;
+	cin >> n;
 
-	int cnt;
-	cin >> cnt;
+	Matrix mat(HEIGHT + 1, vector<bool>(WIDTH + 1));
 
-	vector<vector<bool>> arr(101, vector<bool> (101, 0));
+	for (int i = 0; i < n; ++i) {
+		int left, bottom;
+		cin >> left >> bottom;
 
-	for (int i = 1; i < 101; ++i) {
-		for (int j = 1; j < 101; ++j) {
-			
-			int width, height;
-			cin >> width >> height;
-
-			for (int k = height; k < height + 10; ++k) {
-				for (int l = width; l < width + 10; ++l) {
-					arr[k][l] = true;
-				}
-			}
-		}
+		stic_paper(mat, left, bottom);
 	}
 
-	cout << is_area(arr) << "\n";
+	cout << get_area(mat) << "\n";
 
 	return 0;
 }

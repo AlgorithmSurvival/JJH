@@ -4,11 +4,11 @@
 using namespace std;
 
 int find_num(const int num1, const int num2) {
-	vector<int> factors(num1 + 1);
+	vector<int> factors;
 
 	for (int i = 1; i <= num1; ++i) {
 		if (num1 % i == 0)
-			factors[i] = i;
+			factors.push_back(i);
 	}
 
 	int cnt = 0;

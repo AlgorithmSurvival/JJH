@@ -4,7 +4,7 @@
 
 using namespace std;
 
-int is_max_length_triangle(const vector<int>& branches) {
+int get_max_length_triangle(const vector<int>& branches) {
 	int max_length = *max_element(branches.begin(), branches.end());
 	int side_sum = 0;
 
@@ -27,7 +27,7 @@ int main() {
 		cin >> branches[i];
 	}
 
-	cout << is_max_length_triangle(branches) << "\n";
+	cout << get_max_length_triangle(branches) << "\n";
 
 	return 0;
 }

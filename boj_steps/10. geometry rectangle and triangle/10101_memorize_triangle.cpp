@@ -38,8 +38,6 @@ string determine_triangle(const vector<int>& angles) {
 	else {
 		return "Equilateral";
 	}
-	
-	return "0";
 }
 
 int main() {

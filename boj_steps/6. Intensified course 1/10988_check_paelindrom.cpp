@@ -5,18 +5,16 @@
 
 using namespace std;
 
-int check_paelindrom(string str) {
+bool check_paelindrom(const string& str) {
 
 	string temp = str;
 
-	reverse(str.begin(), str.end());
+	reverse(temp.begin(), temp.end());
 	
-	if (temp == str)
-		return 1;
+	if (str.compare(temp) == 0)
+		return true;
 	else
-		return 0;
-
-	return 0;
+		return false;
 }
 
 int main() {

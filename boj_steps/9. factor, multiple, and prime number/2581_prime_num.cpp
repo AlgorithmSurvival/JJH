@@ -21,7 +21,7 @@ pair <int, int> find_prime_num(const int to, const int from) {
 	vector<int> prime_nums;
 	int sum = 0;
 
-	for (int i = to; i <= from; ++i) {		
+	for (int i = from; i <= to; ++i) {		
 		if(is_prime_num(i)) {
 			prime_nums.push_back(i);
 			sum += i;
@@ -37,7 +37,7 @@ pair <int, int> find_prime_num(const int to, const int from) {
 
 int main() {
 	int to, from;
-	cin >> to >> from;
+	cin >> from >> to;
 
 	auto [sum, min] = find_prime_num(to, from);
 

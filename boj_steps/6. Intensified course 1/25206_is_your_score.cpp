@@ -4,15 +4,42 @@
 
 using namespace std;
 
+double getScore(string grade) {
+	double out = 0;
+	if (grade[0] == 'P')
+		return -1;
+
+	if (grade[0] == 'F')
+		return 0;
+
+	switch (grade[0]) {
+	case 'A' :
+		out += 4.0; break;
+	case 'B' :
+		out += 3.0; break;
+	case 'C' :
+		out += 2.0; break;
+	case 'D' :
+		out += 1.0; break;
+	}
+
+	if (grade[1] == '+')
+		out += 0.5;
+
+	cout << out << "\n";
+
+	return out;
+}
+
 pair<double, double> change_score_double(const vector<string>& sub) {
 
 	double credit = 0;
-	double score = 0;
+	double score = getScore(sub[2]);
 
 	if (sub[2] != "P") {
 		credit = stod(sub[1]);
 	}
-
+	/*
 	if (sub[2] == "A+")
 		score = 4.5;
 	else if (sub[2] == "A0")
@@ -31,8 +58,10 @@ pair<double, double> change_score_double(const vector<string>& sub) {
 		score = 1.0;
 	else if (sub[2] == "F")
 		score = 0;
+	*/
 
 	return { credit, score };
+
 }
 
 inline double calculate_score(const double credit, const double score) {

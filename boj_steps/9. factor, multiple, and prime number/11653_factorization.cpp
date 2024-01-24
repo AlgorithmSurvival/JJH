@@ -7,7 +7,7 @@ using namespace std;
 void do_factorization(const int N) {
 	int num = N;
 
-	for (int i = 2; i <= sqrt(num); ++i) {
+	for (int i = 2; i * i <= num; ++i) {
 		while (num % i == 0) {
 			cout << i << "\n";
 			num /= i;

@@ -1,71 +1,84 @@
+#include <array>
+#include <climits>
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <array>
 
 using namespace std;
-using Matrix = vector<vector<int>>; 
-static vector<vector<bool>> is_visited; // 방문 체크
-static Matrix graph; // 미로 저장
-static Matrix dist; // 이동칸 기록
-static array<int, 4> x_dir = {-1, 1, 0, 0}; //사방 x축
-static array<int, 4> y_dir = {0, 0, -1, 1}; //사방 y축
-static int N, M; //미로크기
 
+using Matrix = vector<vector<int>>;
+using Point = pair<int, int>;
 
-int get_min_route(int start_x, int start_y) {
-	is_visited[start_x][start_y] = true; // 시작점 표시
-	queue<pair<int, int>> q; 
-	q.push(make_pair(start_x, start_y)); // q에 삽입
-	dist[start_x][start_y]++; // 시작 좌표까지 이동한칸을 1로 지정
+class Maze {
+	static constexpr int WALL = 0;
+	static constexpr int WAY = 1;
+	static constexpr int VISITED = 0;
 
-	while(!q.empty()) {
-		int x = q.front().first; //x 
-		int y = q.front().second; //y
+	static constexpr array<pair<int, int>, 4> dirs = { {
+		{ 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 }, 
+	} };
 
-		// q의 front 좌표 삭제
-		q.pop();
+	Matrix maze;
+	int height;
+	int width;
 
-		//현재 위치에 사방 확인
-		for (int i = 0; i < 4; ++i) {
-
-			//현재 좌표의 사방
-			int x_new = x + x_dir[i];
-			int y_new = y + y_dir[i];
-
-			//사방이, 미로내에 존재, 방문여부, 이동가능여부 확인
-			if ((x_new >= 0 && x_new < N) 
-				&& (y_new >= 0 && y_new < M)
-				&& !is_visited[x_new][y_new]
-				&& graph[x_new][y_new] == 1) {
-
-				is_visited[x_new][y_new] = true;
-				q.push(make_pair(x_new, y_new));
-				dist[x_new][y_new] = dist[x][y] + 1;
+public:
+	Maze(const int n, const int m) : height{n}, width{m} {
+		maze = Matrix(n + 2, vector<int>(m + 2, WALL));
+		for (int i = 1; i <= n; ++i) {
+			for (int j = 1; j <= m; ++j) {
+				char temp;
+				cin >> temp;
+				maze[i][j] = temp - '0';
 			}
 		}
 	}
 
-	return dist[N-1][M-1];
-}
-
-int main() {
-	
-	cin >> N >> M;
-
-	graph.assign(N, vector<int>(M, 0));
-	dist.assign(N, vector<int>(M, 0));
-	is_visited.assign(N, vector<bool>(M, false));
-	
-	for (int i = 0; i < N; ++i) {
-		for (int j = 0; j < M; ++j) {
-			char temp;
-			cin >> temp;
-			graph[i][j] = temp - '0';
-		}
+	inline int find_way() {
+		// start at { 1, 1 }
+		return bfs(1, 1);
 	}
 
-	cout << get_min_route(0, 0) << "\n";
+	int bfs(const int start_r, const int start_c) {
+		queue<pair<Point, int>> q;
+		q.emplace(make_pair(start_r, start_c), 1);
+
+		while(!q.empty()) {
+			auto [ cur, depth ] = q.front();
+			auto [ r, c ] = cur;
+			q.pop();
+
+			if (is_end(r, c))
+				return depth;
+
+			for (const auto& [ dr, dc ] : dirs) {
+				int nr = r + dr;
+				int nc = c + dc;
+
+				if (maze[nr][nc] == WAY) {
+					maze[nr][nc] = maze[r][c] + 1;
+					q.emplace(make_pair(nr, nc), depth + 1);
+				}
+			}
+		}
+
+		return -1;
+	}
+
+	inline bool is_end(const int r, const int c) {
+		return ((r == height) && (c == width));
+	}
+};
+
+int main() {
+	cin.tie(nullptr);
+	ios_base::sync_with_stdio(false);
+
+	int n, m;
+	cin >> n >> m;
+
+	Maze maze(n, m);
+	cout << maze.find_way() << "\n";
 
 	return 0;
 }

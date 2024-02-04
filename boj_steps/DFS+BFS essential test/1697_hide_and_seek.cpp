@@ -1,56 +1,43 @@
 #include <iostream>
 #include <vector>
 #include <queue>
-#include <array>
 
 using namespace std;
-using Matrix = vector<vector<int>>;
 
-static array<bool, 100001> is_visited;
-static array<int, 3> x_dir = {1, -1, 0};
+int get_min_catch_time(const int start, const int end) {
+    vector<bool> visited(100001);
+    queue<pair<int, int>> q;
 
-int get_time(int start_p, int end_p) {
-	queue<pair<int, int>> q;
-	is_visited[start_p] = true;
-	q.push(make_pair(start_p, 0));
+    q.emplace(start, 0);
+    visited[start] = true;
 
-	while(!q.empty()) {
-		int now = q.front().first;
-		int cnt = q.front().second;
-		q.pop();
-		
-		if (now == end_p) {
-			return cnt;
-		}
+    while (!q.empty()) {
+        auto [ cur, depth ] = q.front();
+        q.pop();
 
-		for (int i = 0; i < 3; ++i) {
-			
-			int next = now + x_dir[i];
+        if (cur == end) 
+            return depth;
 
-			if (x_dir[i] == 0) {
-				next = 2*now;
-			}
+        vector<int> nexts = {cur + 1, cur - 1, cur * 2};
 
-			if ((next >=0 && next < 100001) &&
-				!is_visited[next]) {
+        for (auto& next : nexts) {
+            if(next >= 0 && next < visited.size()) {
+                if (!visited[next]) {
+                    visited[next] = true;
+                    q.emplace(next, depth + 1);
+                }
+            }
+        }
+    }
 
-				is_visited[next] = true;
-				q.push(make_pair(next, cnt+1));
-			}
-		} 
-	}
-
-	return 0;
+    return -1;
 }
 
 int main() {
+    int n, k;
+    cin >> n >> k;
 
-	int subin_now, sister_now;
-	cin >> subin_now >> sister_now;
+    cout << get_min_catch_time(n, k) << "\n";
 
-	fill(is_visited.begin(), is_visited.end(), false);
-
-	cout << get_time(subin_now, sister_now) << "\n";
-
-	return 0;
-}  
+    return 0;
+}

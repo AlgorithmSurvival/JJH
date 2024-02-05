@@ -1,45 +1,53 @@
+#include <array>
+#include <algorithm>
 #include <iostream>
 #include <vector>
+#include <queue>
 
 using namespace std;
-using Matrix = vector<vector<int>>;
 
-static Matrix computers;
-static vector<bool> is_visited;
-static int N, M;
-static int cnt = 0;
+using Graph = vector<vector<int>>;
+using Point = pair<int, int>;
 
+int get_infected_counter(const Graph& graph, int start) {
+	vector<bool> visited(graph.size());
+	queue<int> q;
 
-void get_infected_computer(int start) {
-	is_visited[start] = true;	
+	visited[start] = true;;
+	q.emplace(start);
 
-	for  (int i = 0; i < computers[start].size(); ++i) {
-		int next = computers[start][i];
-		if(!is_visited[next]) {
-			get_infected_computer(next);
-			cnt++;
-		}		
+	while (!q.empty()) {
+		int cur = q.front();
+		q.pop();
+
+		for (const auto& next : graph[cur]) {
+			if(!visited[next]) {
+				visited[next] = true;
+				q.emplace(next);
+			}
+		}
 	}
+
+	return count(visited.begin(), visited.end(), true);
 }
 
 int main() {
-	cin >> N;
-	cin >> M;
+	cin.tie(nullptr);
+	ios_base::sync_with_stdio(false);
 
-	computers.assign(N + 1, vector<int>(0, 0));
-	is_visited.assign(N + 1, false);
+	int vertex_cnt, edge_cnt;
+	cin >> vertex_cnt >> edge_cnt;
 
-	for (int i = 1; i <= M; ++i) {
-			int temp_x;
-			int temp_y;
-			cin >> temp_x >> temp_y;
+	Graph graph(vertex_cnt + 1);
+	for (int i = 0; i < edge_cnt; ++i) {
+		int from, to;
+		cin >> from >> to;
 
-			computers[temp_x].push_back(temp_y);
-			computers[temp_y].push_back(temp_x);
+		graph[from].emplace_back(to);
+		graph[to].emplace_back(from);
 	}
 
-	get_infected_computer(1);
-	cout << cnt << "\n";
+	cout << get_infected_counter(graph, 1) - 1 << "\n";
 
 	return 0;
 }

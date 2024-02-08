@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <iostream>
 #include <vector>
 #include <queue>
@@ -5,88 +6,111 @@
 
 using namespace std;
 using Matrix = vector<vector<int>>;
+using Point = pair<int, int>;
 
-static Matrix graph;
-static vector<vector<bool>> is_visited;
-static array<int, 4> x_dir= {-1, 1, 0, 0};
-static array<int, 4> y_dir= {0, 0, -1, 1};
-static int max_area = 1;
-static int max_height = 0;
-static int cnt = 0;
-static int n;
+class SafetyArea {
+	static constexpr int WALL = 0; 
+	static constexpr array<Point, 4> dirs= { {
+		{ 0, 1 }, { 1, 0 }, { 0, -1 }, { -1, 0 }
+	} };
 
-void reset() {
-	for (int i = 0; i < n; ++i) {
-		for (int j = 0; j < n; ++j) {
-			is_visited[i][j] = false;
+	Matrix areas;
+	vector<vector<bool>> visited;
+	int n;
+	int max_height = 0;
+	int area_cnt = 0;
+
+public:
+	SafetyArea(const int n) : n{n} {
+		areas = Matrix(n + 2, vector<int>(n + 2, WALL));
+
+		for (int i = 1; i <= n; ++i) {
+			for (int j = 1; j <= n; ++j) {
+				cin >> areas[i][j];
+				//cout << areas[i][j] << " ";
+			}
+			//cout << "\n";
 		}
+
+		find_max_height();
 	}
-	cnt = 0;
-}
 
-void get_max_num(int st_x, int st_y, int height) {
-	queue<pair<int, int>> q;
-	q.push(make_pair(st_x, st_y));
-	is_visited[st_x][st_y] = true;
+	inline void find_max_height() {
+		for (const auto& vec : areas) {
+			for (const auto& area_height : vec)
+				if (area_height > max_height)
+					max_height = area_height;
+		}
 
-	while(!q.empty()) {
-		int x = q.front().first;
-		int y = q.front().second;
-		q.pop();
+		//cout << "max_height " << max_height << "\n";
+	}
 
-		for (int i = 0; i < 4; ++i) {
-			int nx = x + x_dir[i];
-			int ny = y + y_dir[i];
+	int find_safty_area(const int height) {
+		int area_cnt = 0;
 
-			if ((nx >= 0 && nx < n) &&
-				(ny >= 0 && ny < n) &&
-				(graph[nx][ny] > height) &&
-				(!is_visited[nx][ny])) {
-
-				is_visited[nx][ny] = true;
-				q.push(make_pair(nx, ny));
+		for (int i = 1; i <= n; ++i) {
+			for (int j = 1; j <= n; ++j) {
+				if (!visited[i][j]) {
+					if (areas[i][j] > height) {
+						bfs(i, j, height);
+						++area_cnt;
+						//cout << "+" << "\n";
+					}
+				}			
 			}
 		}
+
+		return area_cnt;
 	}
-}
 
-int main () {
+	int find_max_safety_area() {
+		int max_area = 0;
 
-	cin >> n;
-	graph.assign(n, vector<int>(n, 0));
-	is_visited.assign(n, vector<bool>(n, false));
-
-	for (int i = 0; i < n; ++i) {
-		for (int j = 0; j < n; ++j) {
-			cin >> graph[i][j];
-			if (graph[i][j] > max_height)
-				max_height = graph[i][j];
+		for (int h = 0; h <= max_height; ++h) {
+			visited = vector<vector<bool>>(n + 2, vector<bool>(n + 2, false));
+			int area_cnt = find_safty_area(h);
+			if (area_cnt > max_area)
+				max_area = area_cnt;
 		}
-	}
 
-	for (int h = 0; h <= max_height; ++h) {
-		reset();
+		return max_area;
+	} 
 
-		for (int i = 0; i < n; ++i) {
-			for (int j = 0; j < n; ++j) {
-				if((graph[i][j] > h) &&
-				!is_visited[i][j]) {
-					cnt++;
-					get_max_num(i, j, h);	
+	void bfs(const int start_r, const int start_c, const int height) {
+		queue<Point> q;
+		q.emplace(start_r, start_c);
+		visited[start_r][start_c] = true;
+
+		while(!q.empty()) {
+			auto [ r, c ] = q.front();
+			q.pop();
+
+			for (const auto& [ dr, dc ] : dirs) {
+				int nr = r + dr;
+				int nc = c + dc;
+
+				if (areas[nr][nc] != WALL) {
+					if (!visited[nr][nc]) {
+						if (areas[nr][nc] > height) {
+							q.emplace(nr, nc);
+							visited[nr][nc] = true;
+						}
+					}
 				}
 			}
 		}
-
-		if (cnt == 0) {
-			break;
-		}
-
-		if (cnt > max_area) {
-			max_area = cnt;
-		}
 	}
+};
 
-	cout << max_area << "\n";
+int main() {
+	cin.tie(nullptr);
+	ios_base::sync_with_stdio(false);
+
+	int n;
+	cin >> n;
+
+	SafetyArea area(n);
+	cout << area.find_max_safety_area() << "\n";
 
 	return 0;
 }

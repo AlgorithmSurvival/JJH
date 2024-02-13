@@ -1,38 +1,32 @@
+#include <array>
+#include <algorithm>
 #include <iostream>
 #include <vector>
-#include <array>
 #include <queue>
-#include <algorithm>
 
-#define MAX 105
 using namespace std;
 
-static vector<pair<int, int>> px_map;
-static array<bool, MAX> is_visited;
-static int num_px, home_x, home_y, target_x, target_y;
-static string result;
+using Point = pair<int, int>;
 
-string cnt_beer() {
-	queue<pair<int, int>> q;
-	q.push(make_pair(home_y, home_x));
+string go_to_festival(const int home_x, const int home_y, const vector<Point>& shop_map, const int festival_x, const int festival_y) {
+	vector<bool> visited(101);
+	queue<Point> q;
+	q.emplace(home_y, home_x);
 
 	while(!q.empty()) {
-		int y = q.front().first;
-		int x = q.front().second;
+		auto [r, c] = q.front();
 		q.pop();
 
-		if (abs(target_y - y) + abs(target_x - x) <= 1000) {
+		if (abs(festival_y - r) + abs(festival_x - c) <= 1000)
 			return "happy";
-		}
 
-		for (int i = 0; i < num_px; ++i) {
-			int ny = px_map[i].first;
-			int nx = px_map[i].second;
-			if (is_visited[i])
-				continue;
-			if (abs(ny - y) + abs(nx - x) <= 1000) {
-				is_visited[i] = true;
-				q.push(make_pair(ny, nx));
+		for (int i = 0; i < shop_map.size(); ++i) {
+			auto [nr, nc] = shop_map[i];
+			if (!visited[i]) {
+				if (abs(nr - r) + abs(nc - c) <= 1000) {
+					visited[i] = true;
+					q.emplace(nr, nc);
+				}
 			}
 		}
 	}
@@ -40,29 +34,27 @@ string cnt_beer() {
 	return "sad";
 }
 
-void reset() {
-	px_map.clear();
-	for (int i = 0; i < MAX; ++i) {
-		is_visited[i] = false;
-	}
-} 
-
-int main () {
+int main() {
 	int T;
 	cin >> T;
-	for (int test_case = 0; test_case < T; ++test_case) {	
-		cin >> num_px;
-		cin >> home_x >> home_y;
+	for (int test_case = 0; test_case < T; ++test_case) {
+		int num_shop;
+		cin >> num_shop;
 		
-		for (int i = 0; i < num_px; ++i) {
-			int x, y;
-			cin >> x >> y;
-			px_map.push_back({y, x});
-		}
-		cin >> target_x >> target_y;
+		int home_x, home_y;
+		cin >> home_x >> home_y;
 
-		cout << cnt_beer() << "\n";
-		reset();
+		vector<Point> shop_map;
+		for (int i = 0; i < num_shop; ++ i) {
+			int shop_x, shop_y;
+			cin >> shop_x >> shop_y;
+			shop_map.emplace_back(shop_y, shop_x);
+		}
+
+		int festival_x, festival_y;
+		cin >> festival_x >> festival_y;
+
+		cout << go_to_festival(home_x, home_y, shop_map, festival_x, festival_y) << "\n";
 	}
 
 	return 0;

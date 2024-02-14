@@ -52,9 +52,15 @@ public:
 
 		while(!q.empty()) {
 			auto [ r, c, d ] = q.front();
+			cout << r << " " << c << " " << d << " " << "\n";
 			q.pop();
-			cout << " 1 " << "\n";
+						
+			++area_cnt; 
+			cout << "area_cnt " << area_cnt << "\n";
 
+			if (!is_run(r, c, d, visited))
+				return area_cnt;
+			
 			for (const auto& [ dr, dc ] : dirs) {
 				int nr = r + dr;
 				int nc = c + dc;
@@ -64,8 +70,6 @@ public:
 						auto [ tr, tc, td ] = go_straight(r, c, d, visited);
 						q.emplace(tr, tc, td);
 						visited[tr][tc] = true;
-						++area_cnt; 
-						cout << "area_cnt " << area_cnt << "\n";
 					}
 
 					else {
@@ -205,7 +209,7 @@ int main() {
 	cin >> r >> c >> d;
 
 	RobotCleaner robotcleaner(n, m);
-	cout << robotcleaner.get_cleaning_area(r, c, d) << "\n";
+	cout << robotcleaner.get_cleaning_area(r + 1, c + 1, d) << "\n";
 
 	return 0;
 }

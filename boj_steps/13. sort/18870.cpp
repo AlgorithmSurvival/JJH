@@ -55,4 +55,6 @@ int main() {
 
 	vector<int> idxs = get_idxs_1(nums);
 	print(idxs);
+
+	return 0;
 }

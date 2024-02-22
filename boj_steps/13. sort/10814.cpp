@@ -7,17 +7,16 @@ using namespace std;
 
 using Point = pair<int, string>;
 
-bool compare_with(Point a, Point b) {
+inline bool compare(Point a, Point b) {
 	return a.first < b.first;
 }
 
 void sort_ascending(vector<Point>& people) {
-	stable_sort(people.begin(), people.end(), compare_with);
+	stable_sort(people.begin(), people.end(), compare);
 }
 
 void print(const vector<Point>& people) {
-	for (const auto& person : people) {
-		auto [ age, name ] = person;
+	for (const auto& [ age, name ] : people) {
 		cout << age << " " << name <<"\n";
 	}
 }

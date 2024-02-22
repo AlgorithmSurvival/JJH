@@ -4,10 +4,15 @@
 
 using namespace std;
 
-void get_ascending_num(vector<int>& nums) {
-	sort(nums.begin(), nums.end());
-	reverse(nums.begin(), nums.end());
+inline bool compare(const int a, const int b) {
+	return a > b;
+}
 
+void sort_ascending_num(vector<int>& nums) {
+	sort(nums.begin(), nums.end(), compare);
+}
+
+void print_ascending_num(const vector<int>& nums) {
 	for (const auto& num : nums)
 		cout << num;
 	
@@ -21,7 +26,8 @@ int main() {
 		nums.emplace_back(num - '0');
 	}
 
-	get_ascending_num(nums);
+	sort_ascending_num(nums);
+	print_ascending_num(nums);
 
 	return 0;
 }

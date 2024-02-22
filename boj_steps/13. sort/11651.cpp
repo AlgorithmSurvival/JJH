@@ -6,10 +6,18 @@ using namespace std;
 
 using Point = pair<int, int>;
 
+inline bool compare(const Point a, const Point b) {
+	if (a.second == b.second)
+		return a.first < b.first;
+	return a.second < b.second;
+}
+
+void sort_ascending_y(vector<Point>& coordinates) {
+	sort(coordinates.begin(), coordinates.end(), compare);
+}
+
 void print_ascending_y(vector<Point>& coordinates) {
-	sort(coordinates.begin(), coordinates.end());
-	for (const auto& coordinate : coordinates) {
-		auto [ y, x ] = coordinate;
+	for (const auto& [ x, y ]: coordinates) {
 		cout << x << " " << y << "\n";
 	}
 }
@@ -21,9 +29,10 @@ int main() {
 	for (int i = 0; i < n; ++i) {
 		int x, y;
 		cin >> x >> y;
-		coordinates.emplace_back(y, x);
+		coordinates.emplace_back(x, y);
 	}
 
+	sort_ascending_y(coordinates);
 	print_ascending_y(coordinates);
 
 	return 0;

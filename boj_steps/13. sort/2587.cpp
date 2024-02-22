@@ -1,11 +1,10 @@
+#include <array>
 #include <iostream>
 #include <vector>
 
 using namespace std;
 
-using Point = pair<int, int>;
-
-void bubble_sort(vector<int>& nums) {
+void bubble_sort(array<int, 5> nums) {
 	for (int i = 0; i < nums.size(); ++i) {
 		for (int j = nums.size() - 1; j > i; --j) {
 			if (nums[j - 1] > nums[j])
@@ -14,7 +13,7 @@ void bubble_sort(vector<int>& nums) {
 	}
 }
 
-Point get_avg_mid_num(vector<int>& nums) {
+pair<int, int> get_avg_mid_num(const array<int, 5> nums) {
 	bubble_sort(nums);
 	
 	int sum = 0;
@@ -25,7 +24,7 @@ Point get_avg_mid_num(vector<int>& nums) {
 }
 
 int main() {
-	vector<int> nums(5);
+	array<int, 5> nums;
 	for (int i = 0; i < 5; ++i) {
 		cin >> nums[i];
 	}

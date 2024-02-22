@@ -6,11 +6,13 @@ using namespace std;
 
 using Point = pair<int, int>;
 
-void print_ascending(vector<Point> coordinates) {
+void sort_ascending(vector<Point>& coordinates) {
 	sort(coordinates.begin(), coordinates.end());
+}
 
-	for (const auto& coordinate : coordinates) {
-		auto[ x, y ] = coordinate;
+void print_ascending(vector<Point>& coordinates) {
+
+	for (const auto& [ x, y ] : coordinates) {
 		cout << x << " " << y << "\n";
 	}
 }
@@ -25,6 +27,7 @@ int main() {
 		coordinates.emplace_back(x, y);
 	}
 
+	sort_ascending(coordinates);
 	print_ascending(coordinates);
 
 	return 0;

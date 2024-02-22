@@ -22,7 +22,7 @@ void print_ascending(vector<string>& words) {
 		cout << word << "\n";
 }
 */
-bool compare_with(string a, string b) {
+inline bool compare_with(const string a, const string b) {
 	if (a.length() == b.length())
 		return a < b;
 	return a.length() < b.length();
